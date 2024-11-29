@@ -1,0 +1,39 @@
+<div class="client-manager">
+  <div class="client-manager__header">
+    <span class="results"><strong>{{ clients.length }}</strong> clientes encontrados:</span>
+    <div class="per-page">
+      <label for="items-per-page">Clientes por página: </label>
+      <select id="items-per-page" [(ngModel)]="itemsPerPage">
+        <option [value]="8">8</option>
+        <option [value]="16">16</option>
+        <option [value]="32">32</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="client-manager__grid">
+    <div *ngFor="let client of clients | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }"
+      class="client-card">
+      <div class="client-card__content">
+        <h3 class="client-card__title">{{ client.name }}</h3>
+        <p class="client-card__detail">Salário: R$ {{ client.salary }}</p>
+        <p class="client-card__detail">Empresa: R$ {{ client.company }}</p>
+      </div>
+      <div class="client-card__actions">
+        <button class="client-card__action client-card__action--add">+</button>
+        <button class="client-card__action client-card__action--edit">✏️</button>
+        <button class="client-card__action client-card__action--delete">🗑️</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="client-manager__footer">
+    <button class="client-manager__create" (click)="createClient()">Criar cliente</button>
+    <!-- <pagination-controls
+      (pageChange)="currentPage = $event"
+      previousLabel="Anterior"
+      nextLabel="Próximo"
+      [id]="'custom-pagination'"
+    ></pagination-controls> -->
+  </div>
+</div>
