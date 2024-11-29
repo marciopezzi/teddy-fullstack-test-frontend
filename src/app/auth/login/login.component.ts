@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +13,12 @@ import { FormsModule } from '@angular/forms';
 export class LoginComponent {
   username: string = '';
 
+  constructor(private authService: AuthService) { }
+
   onSubmit(): void {
     if (this.username.trim()) {
-      console.log(`Bem-vindo, ${this.username}!`);
+      const token = this.username;
+      this.authService.login(token);
     } else {
       console.log('Por favor, insira um nome válido.');
     }
