@@ -41,12 +41,8 @@
   }
 
   &__footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
     .client-manager__create {
-      flex: 1;
+      width: 100%;
       padding: 0.75rem 1.5rem;
       font-size: 1rem;
       font-weight: 700;
@@ -61,63 +57,44 @@
       }
     }
 
-    pagination-controls {
-      .ngx-pagination {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-        justify-content: center;
+    .pagination-container {
+      padding-top: 1rem;
+      display: flex;
+      justify-content: center;
 
-        .current {
-          background-color: #ff7043;
-          color: white;
-          border: none;
-          border-radius: 0.25rem;
-        }
-
-        a {
-          padding: 0.5rem 1rem;
-          text-decoration: none;
-          color: #ff7043;
-          border: 1px solid #ff7043;
-          border-radius: 0.25rem;
-          cursor: pointer;
-
-          &:hover {
-            background-color: #ffe0b2;
-          }
-        }
-
-        .disabled {
-          opacity: 0.5;
-          pointer-events: none;
-        }
+      .my-pagination ::ng-deep .ngx-pagination .current {
+        background: #EC6724;
+        border-radius: 4px;
       }
     }
   }
 }
 
 .client-card {
+  padding: 1rem;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 4px 0px #0000001A;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 0.25rem;
 
   &__content {
     &__title {
-      font-weight: bold;
+      font-size: 1rem;
+      font-weight: 700;
     }
 
     &__detail {
-      color: #555;
+      font-size: 14px;
+      font-weight: 400;
     }
   }
 
   &__actions {
+    padding-top: 0.5rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     &__action {
       cursor: pointer;
