@@ -1,4 +1,5 @@
-<app-header></app-header>
+<app-header (toggleMenu)="onToggleMenu()"></app-header>
+<app-side-menu #sideMenu></app-side-menu>
 <main>
   <router-outlet></router-outlet>
 </main>
