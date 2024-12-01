@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ action === 'create' ? 'Criar' : 'Editar' }} Cliente</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="this.close()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+
+    <div class="mb-3">
+      <label for="name" class="form-label">Nome:</label>
+      <input type="text" id="name" class="form-control" formControlName="name" placeholder="Digite o nome">
+    </div>
+
+    <div class="mb-3">
+      <label for="salary" class="form-label">Salário:</label>
+      <input type="number" id="salary" class="form-control" formControlName="salary" placeholder="Digite o salário">
+    </div>
+
+    <div class="mb-3">
+      <label for="companyValue" class="form-label">Valor da Empresa:</label>
+      <input type="number" id="companyValue" class="form-control" formControlName="companyValue"
+        placeholder="Digite o valor da empresa">
+    </div>
+
+    <button type="submit" class="submit-button" [disabled]="clienteForm.invalid">
+      Criar Cliente
+    </button>
+  </form>
+</div>

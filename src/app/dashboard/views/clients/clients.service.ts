@@ -16,6 +16,11 @@ export class ClientsService {
     return this.http.post<IClient>(this.apiUrl, client);
   }
 
+  updateClient(id: number, changes: Partial<ClientCreationDTO>): Observable<IClient> {
+    console.log(changes)
+    return this.http.patch<IClient>(this.apiUrl + `/${id}`, changes);
+  }
+
   getAllPaginated(page: number, limit: number): Observable<IPaginatedClients> {
     return this.http.get<IPaginatedClients>(`${this.apiUrl}/paginated?page=${page}&limit=${limit}`);
   }

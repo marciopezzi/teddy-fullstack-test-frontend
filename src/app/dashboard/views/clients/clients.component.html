@@ -27,7 +27,10 @@
         <button class="client-card__action client-card__action--add">
           <img src="/icons/plus.png" alt="">
         </button>
-        <button class="client-card__action client-card__action--edit">
+        <button 
+          class="client-card__action client-card__action--edit"
+          (click)="createOrUpdateClient('update', client)"
+        >
           <img src="/icons/pencil.png" alt="">
         </button>
         <button 
@@ -41,7 +44,7 @@
   </div>
 
   <div class="client-manager__footer">
-    <button class="client-manager__create" (click)="createClient()">Criar cliente</button>
+    <button class="client-manager__create" (click)="createOrUpdateClient('create')">Criar cliente</button>
     <div class="pagination-container">
       <pagination-controls
         class="my-pagination"
