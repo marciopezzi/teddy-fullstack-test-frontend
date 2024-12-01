@@ -17,9 +17,13 @@ body {
 a {
   cursor: pointer;
   text-decoration: none;
+  color: #000000;
 }
 
-p, h1, h2, h3 {
+p,
+h1,
+h2,
+h3 {
   margin: 0;
 }
 
@@ -42,12 +46,8 @@ textarea {
   transition: border-color 0.3s ease;
 }
 
-input:focus,
-textarea:focus {
-  border-color: #007bff;
-}
-
 ul {
+  padding: 0;
   margin: 0;
   list-style: none;
 }
