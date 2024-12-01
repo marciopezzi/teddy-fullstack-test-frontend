@@ -14,11 +14,19 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: 'home',
+        component: ClientsComponent,
+      },
+      {
         path: 'clientes',
         component: ClientsComponent,
       },
       {
         path: 'clientes-selecionados',
+        component: ClientsComponent,
+      },
+      {
+        path: 'produtos',
         component: ClientsComponent,
       },
       {
