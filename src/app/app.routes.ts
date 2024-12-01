@@ -3,6 +3,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ClientsComponent } from './dashboard/views/clients/clients.component';
+import { ProductsComponent } from './dashboard/views/products/products.component';
+import { HomeComponent } from './dashboard/views/home/home.component';
 
 export const routes: Routes = [
   {
@@ -15,7 +17,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
-        component: ClientsComponent,
+        component: HomeComponent,
       },
       {
         path: 'clientes',
@@ -27,7 +29,7 @@ export const routes: Routes = [
       },
       {
         path: 'produtos',
-        component: ClientsComponent,
+        component: ProductsComponent,
       },
       {
         path: '',
