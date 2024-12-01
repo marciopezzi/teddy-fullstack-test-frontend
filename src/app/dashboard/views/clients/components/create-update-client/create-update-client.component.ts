@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ClientsService } from '../../clients.service';
+import { ClientsService } from '../../services/clients.service';
 import { ClientCreationDTO, IClient } from '../../clients.interface';
 
 @Component({

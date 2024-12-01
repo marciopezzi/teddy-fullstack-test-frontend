@@ -97,23 +97,11 @@
   &__actions {
     padding-top: 1rem;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-
-    &__action {
-      cursor: pointer;
-      font-size: 1.25rem;
-
-      &--add {
-        color: #4caf50;
-      }
-
-      &--edit {
-        color: #1976d2;
-      }
-
-      &--delete {
-        color: #f44336;
-      }
+    button {
+      display: flex;
+      align-items: center;
     }
   }
 }

@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ClientsService } from './clients.service';
+import { ClientsService } from './services/clients.service';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgFor, NgIf } from '@angular/common';
-import { ClientCreationDTO, IClient } from './clients.interface';
+import { IClient } from './clients.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateUpdateClientComponent } from './components/create-update-client/create-update-client.component';
+import { SelectedClientsService } from './services/selected-clients.service';
+import { ActivatedRoute } from '@angular/router';
+
+type ClientWithSelection = IClient & { selected: boolean };
 
 @Component({
   selector: 'app-clients',
@@ -20,31 +24,57 @@ import { CreateUpdateClientComponent } from './components/create-update-client/c
   styleUrl: './clients.component.scss'
 })
 export class ClientsComponent implements OnInit {
-  clients: IClient[] = [];
+  clients: ClientWithSelection[] = [];
   totalItems: number = 0;
   itemsPerPage: number = 16;
   currentPage: number = 1;
   showModal = false;
 
+  selectedClients: IClient[] = [];
+  private selectedClientIds: Set<number> = new Set();
+  onlySelectedClients: boolean = false;
+
   constructor(
     private service: ClientsService,
-    private modalService: NgbModal
+    private clientsSelectionService: SelectedClientsService,
+    private modalService: NgbModal,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.fetchClients();
+    this.loadSelectedClients();
+
+    this.route.url.subscribe((urlSegments) => {
+      this.onlySelectedClients = urlSegments.some(segment => segment.path === 'clientes-selecionados');
+      this.fetchClients();
+    });
   }
 
   fetchClients() {
-    this.service.getAllPaginated(this.currentPage, this.itemsPerPage).subscribe({
-      next: (res) => {
-        this.clients = res.data;
-        this.totalItems = res.total;
-      },
-      error: (err) => {
-        console.error(err)
-      }
-    })
+    if (this.onlySelectedClients) {
+      this.updateClients();
+    } else {
+      this.service.getAllPaginated(this.currentPage, this.itemsPerPage).subscribe({
+        next: (res) => {
+          this.clients = res.data.map(c => ({
+            ...c,
+            selected: this.checkSelectedClient(c),
+          }));
+          this.totalItems = res.total;
+        },
+        error: (err) => console.error(err),
+      });
+    }
+  }
+
+  checkSelectedClient(client: IClient): boolean {
+    return this.selectedClientIds.has(client.id);
+  }
+
+  loadSelectedClients() {
+    this.selectedClients = this.clientsSelectionService.clients;
+    this.selectedClientIds = new Set(this.selectedClients.map(c => c.id));
+    this.updateClients();
   }
 
   createOrUpdateClient(action: 'create' | 'update', clientData?: IClient) {
@@ -68,7 +98,9 @@ export class ClientsComponent implements OnInit {
 
   onPageChange(page: number) {
     this.currentPage = page;
-    this.fetchClients();
+    if (!this.onlySelectedClients) {
+      this.fetchClients();
+    }
   }
 
   onItemsPerPageChange(newLimit: number): void {
@@ -80,9 +112,39 @@ export class ClientsComponent implements OnInit {
   removeItem(id: number) {
     this.service.remove(id).subscribe({
       next: () => {
-        this.fetchClients();
+        this.clients = this.clients.filter(client => client.id !== id);
+        this.selectedClients = this.selectedClients.filter(client => client.id !== id);
+        this.selectedClientIds.delete(id);
+        this.totalItems = this.clients.length;
       },
-      error: () => { }
-    })
+      error: (err) => console.error(err),
+    });
   }
+
+
+  addClientToSelection(client: ClientWithSelection) {
+    this.clientsSelectionService.addClient(client);
+    client.selected = true;
+    this.loadSelectedClients();
+  }
+
+  removeClientOfSelection(client: ClientWithSelection) {
+    this.clientsSelectionService.removeClient(client.id);
+    client.selected = false;
+    this.loadSelectedClients();
+  }
+
+  resetClientSelection() {
+    this.clientsSelectionService.clearSelectedClients();
+    this.loadSelectedClients();
+  }
+
+
+  private updateClients(): void {
+    if (this.onlySelectedClients) {
+      this.clients = this.selectedClients.map(c => ({ ...c, selected: true }));
+      this.totalItems = this.clients.length;
+    }
+  }
+
 }
