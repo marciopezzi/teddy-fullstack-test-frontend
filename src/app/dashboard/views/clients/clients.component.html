@@ -15,8 +15,8 @@
     <div *ngFor="let client of clients | paginate: { itemsPerPage, currentPage, totalItems }" class="client-card">
       <div class="client-card__content">
         <h3 class="client-card__title">{{ client.name }}</h3>
-        <p class="client-card__detail">Salário: R$ {{ client.salary }}</p>
-        <p class="client-card__detail">Empresa: R$ {{ client.companyValue }}</p>
+        <p class="client-card__detail">Salário: {{ client.salary | currency:'BRL' }}</p>
+        <p class="client-card__detail">Empresa: {{ client.companyValue | currency:'BRL' }}</p>
       </div>
       <div class="client-card__actions">
         @if (client.selected) {

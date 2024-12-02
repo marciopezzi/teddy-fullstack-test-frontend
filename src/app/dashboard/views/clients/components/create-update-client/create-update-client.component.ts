@@ -1,31 +1,42 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ClientsService } from '../../services/clients.service';
-import { ClientCreationDTO, IClient } from '../../clients.interface';
+import { IClient } from '../../clients.interface';
+import { NgxCurrencyConfig, NgxCurrencyDirective } from 'ngx-currency';
 
 @Component({
   selector: 'app-create-update-client',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgxCurrencyDirective],
   templateUrl: './create-update-client.component.html',
   styleUrl: './create-update-client.component.scss'
 })
-export class CreateUpdateClientComponent {
+export class CreateUpdateClientComponent implements OnInit {
   modalRef!: NgbModalRef;
   action!: 'create' | 'update';
-  clientId!: number;
+  client!: IClient;
 
   clienteForm!: FormGroup;
 
+  currencyInputOptions: Partial<NgxCurrencyConfig> = {
+    prefix: 'R$ ',
+    thousands: '.',
+    decimal: ',',
+    align: 'left'
+  }
+
   constructor(
     private fb: FormBuilder,
-    private clientsService: ClientsService
-  ) {
+    private clientsService: ClientsService,
+  ) { }
+
+  ngOnInit(): void {
+    const isUpdateAction = this.action === 'update';
     this.clienteForm = this.fb.group({
-      name: ['', Validators.required],
-      salary: ['', [Validators.required, Validators.min(0)]],
-      companyValue: ['', [Validators.required, Validators.min(0)]]
+      name: [isUpdateAction ? this.client.name : '', Validators.required],
+      salary: [isUpdateAction ? this.client.salary : '', [Validators.required]],
+      companyValue: [isUpdateAction ? this.client.companyValue : '', [Validators.required]]
     });
   }
 
@@ -44,7 +55,7 @@ export class CreateUpdateClientComponent {
           }
         });
       } else if (this.action === 'update') {
-        this.clientsService.updateClient(this.clientId, clienteData).subscribe({
+        this.clientsService.updateClient(this.client.id, clienteData).subscribe({
           next: () => {
             this.modalRef?.close(true);
           }

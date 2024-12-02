@@ -6,3 +6,11 @@
 .submit-button {
   font-size: 14px;
 }
+
+.form-input {
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  &::placeholder {
+    font-size: 1rem;
+  }
+}

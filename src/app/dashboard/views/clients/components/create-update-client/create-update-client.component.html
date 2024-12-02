@@ -6,23 +6,29 @@
   <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
 
     <div class="mb-3">
-      <label for="name" class="form-label">Nome:</label>
-      <input type="text" id="name" class="form-control" formControlName="name" placeholder="Digite o nome">
+      <input type="text" id="name" class="form-input" formControlName="name" placeholder="Digite o nome">
     </div>
 
-    <div class="mb-3">
-      <label for="salary" class="form-label">Salário:</label>
-      <input type="number" id="salary" class="form-control" formControlName="salary" placeholder="Digite o salário">
-    </div>
+    <input 
+      type="text" 
+      id="salary"
+      class="form-input mb-3" 
+      formControlName="salary" 
+      placeholder="Digite o salário"
+      currencyMask [options]="currencyInputOptions"
+    >
 
-    <div class="mb-3">
-      <label for="companyValue" class="form-label">Valor da Empresa:</label>
-      <input type="number" id="companyValue" class="form-control" formControlName="companyValue"
-        placeholder="Digite o valor da empresa">
-    </div>
+    <input 
+      type="text" 
+      id="companyValue"
+      class="form-input mb-3" 
+      formControlName="companyValue"
+      placeholder="Digite o valor da empresa"
+      currencyMask [options]="currencyInputOptions"
+    >
 
     <button type="submit" class="submit-button" [disabled]="clienteForm.invalid">
-      Criar Cliente
+      {{ action === 'update' ? 'Editar' : 'Criar' }} cliente
     </button>
   </form>
 </div>

@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ClientsService } from './services/clients.service';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { NgFor, NgIf } from '@angular/common';
+import { CurrencyPipe, NgFor, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 import { IClient } from './clients.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateUpdateClientComponent } from './components/create-update-client/create-update-client.component';
 import { SelectedClientsService } from './services/selected-clients.service';
 import { ActivatedRoute } from '@angular/router';
+
+registerLocaleData(localePt, 'pt-BR');
 
 type ClientWithSelection = IClient & { selected: boolean };
 
@@ -15,11 +18,12 @@ type ClientWithSelection = IClient & { selected: boolean };
   selector: 'app-clients',
   standalone: true,
   imports: [
-    NgIf,
     NgFor,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CurrencyPipe
   ],
+  providers: [CurrencyPipe],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss'
 })
@@ -84,7 +88,7 @@ export class ClientsComponent implements OnInit {
     componentInstance.modalRef = modalRef;
     componentInstance.action = action;
     if (action === 'update' && clientData) {
-      componentInstance.clientId = clientData.id;
+      componentInstance.client = clientData;
     }
 
     modalRef.result.then(

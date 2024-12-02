@@ -1,7 +1,7 @@
 export interface ClientCreationDTO {
   name: string
-  salary: string
-  companyValue: string
+  salary: number
+  companyValue: number
 }
 
 export interface IClient extends ClientCreationDTO {
