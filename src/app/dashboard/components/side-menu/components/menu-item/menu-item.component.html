@@ -1,0 +1,28 @@
+<li>
+  @if (routerLink) {
+    <a [routerLink]="routerLink" routerLinkActive="active">
+      @if (icon) {
+      <div>
+        <img [src]="icon" alt="{{ text }}" class="menu-icon" />
+      </div>
+      }
+      {{ text }}
+    </a>
+  }
+
+  @if (subRoutes?.length) {
+  <ul class="sub-menu">
+    @for (subRoute of subRoutes; track subRoute.routerLink) {
+    <li>
+      <a 
+        [routerLink]="subRoute.routerLink" 
+        routerLinkActive="active"
+        (click)="$event.stopPropagation()"
+      >
+        {{ subRoute.text }}
+      </a>
+    </li>
+    }
+  </ul>
+  }
+</li>

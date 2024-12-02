@@ -46,6 +46,8 @@ export class ClientsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('Current Route:', this.route.snapshot.url.join('/'));
+
     this.loadSelectedClients();
 
     this.route.url.subscribe((urlSegments) => {

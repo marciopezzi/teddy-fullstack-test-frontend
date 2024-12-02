@@ -1,0 +1,38 @@
+li {
+  a {
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    color: #141414;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: background 0.3s;
+
+    &:hover {
+      color: #EE7D46;
+    }
+
+    &.active {
+      color: #EE7D46;
+    }
+  }
+
+  .sub-menu {
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid #eee;
+
+    li {
+      margin-top: 0.5rem;
+
+      a {
+        font-size: 0.9rem;
+        color: #666;
+
+        &:hover {
+          color: #EE7D46;
+        }
+      }
+    }
+  }
+}
