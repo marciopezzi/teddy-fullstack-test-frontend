@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h4 class="modal-title">Remoção de cliente</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="this.close()"></button>
+</div>
+
+<div class="modal-body">
+  Você está prestes a excluir o cliente: <strong>{{ client.name }}</strong>
+
+  <button type="button" class="submit-button mt-3" (click)="remove()">
+    Excluir cliente
+  </button>
+</div>

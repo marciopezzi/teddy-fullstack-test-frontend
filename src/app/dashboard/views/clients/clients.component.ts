@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateUpdateClientComponent } from './components/create-update-client/create-update-client.component';
 import { SelectedClientsService } from './services/selected-clients.service';
 import { ActivatedRoute } from '@angular/router';
+import { RemoveClientComponent } from './components/remove-client/remove-client.component';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -46,8 +47,6 @@ export class ClientsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('Current Route:', this.route.snapshot.url.join('/'));
-
     this.loadSelectedClients();
 
     this.route.url.subscribe((urlSegments) => {
@@ -115,20 +114,31 @@ export class ClientsComponent implements OnInit {
     this.fetchClients();
   }
 
-  removeItem(id: number) {
-    this.service.remove(id).subscribe({
-      next: () => {
-        this.clients = this.clients.filter(client => client.id !== id);
-        this.selectedClients = this.selectedClients.filter(client => client.id !== id);
-        this.selectedClientIds.delete(id);
-        if (this.onlySelectedClients) {
-          this.totalItems = this.selectedClients.length;
-        } else {
-          this.fetchClients();
+  removeItem(client: IClient) {
+    const modalRef = this.modalService.open(RemoveClientComponent, { centered: true, backdrop: 'static' });
+    const componentInstance = modalRef.componentInstance as RemoveClientComponent;
+    componentInstance.modalRef = modalRef;
+    componentInstance.client = client;
+
+    modalRef.result.then(
+      (result) => {
+        if (result === 'remove') {
+          this.service.remove(client.id).subscribe({
+            next: () => {
+              this.clients = this.clients.filter(c => c.id !== client.id);
+              this.selectedClients = this.selectedClients.filter(c => c.id !== client.id);
+              this.selectedClientIds.delete(client.id);
+              if (this.onlySelectedClients) {
+                this.totalItems = this.selectedClients.length;
+              } else {
+                this.fetchClients();
+              }
+            },
+            error: (err) => console.error(err),
+          });
         }
       },
-      error: (err) => console.error(err),
-    });
+    );
   }
 
 
