@@ -119,7 +119,11 @@ export class ClientsComponent implements OnInit {
         this.clients = this.clients.filter(client => client.id !== id);
         this.selectedClients = this.selectedClients.filter(client => client.id !== id);
         this.selectedClientIds.delete(id);
-        this.totalItems = this.clients.length;
+        if (this.onlySelectedClients) {
+          this.totalItems = this.selectedClients.length;
+        } else {
+          this.fetchClients();
+        }
       },
       error: (err) => console.error(err),
     });
