@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -19,9 +20,13 @@ import { RouterModule } from '@angular/router';
 export class SideMenuComponent {
   isOpen = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   toggle() {
     this.isOpen = !this.isOpen;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

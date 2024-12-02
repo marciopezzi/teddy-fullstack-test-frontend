@@ -1,6 +1,6 @@
 <div class="client-manager">
   <div class="client-manager__header">
-    <span class="results"><strong>{{ totalItems }}</strong> clientes encontrados:</span>
+    <div class="results"><strong>{{ totalItems }}</strong> clientes encontrados</div>
     <div class="per-page">
       <label for="items-per-page">Clientes por página: </label>
       <select id="items-per-page" [(ngModel)]="itemsPerPage" (ngModelChange)="onItemsPerPageChange($event)">
