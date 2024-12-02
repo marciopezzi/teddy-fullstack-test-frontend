@@ -47,12 +47,30 @@ export class ClientsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadState();
     this.loadSelectedClients();
 
     this.route.url.subscribe((urlSegments) => {
       this.onlySelectedClients = urlSegments.some(segment => segment.path === 'clientes-selecionados');
       this.fetchClients();
     });
+  }
+
+  private saveState(): void {
+    const state = {
+      currentPage: this.currentPage,
+      itemsPerPage: this.itemsPerPage,
+    };
+    localStorage.setItem('clientsTableState', JSON.stringify(state));
+  }
+
+  private loadState(): void {
+    const state = localStorage.getItem('clientsTableState');
+    if (state) {
+      const { currentPage, itemsPerPage } = JSON.parse(state);
+      this.currentPage = currentPage || 1;
+      this.itemsPerPage = itemsPerPage || 16;
+    }
   }
 
   fetchClients() {
@@ -103,6 +121,7 @@ export class ClientsComponent implements OnInit {
 
   onPageChange(page: number) {
     this.currentPage = page;
+    this.saveState();
     if (!this.onlySelectedClients) {
       this.fetchClients();
     }
@@ -111,6 +130,7 @@ export class ClientsComponent implements OnInit {
   onItemsPerPageChange(newLimit: number): void {
     this.itemsPerPage = newLimit;
     this.currentPage = 1;
+    this.saveState();
     this.fetchClients();
   }
 
