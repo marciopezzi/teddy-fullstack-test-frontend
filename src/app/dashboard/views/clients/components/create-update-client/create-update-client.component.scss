@@ -1,5 +1,6 @@
 .submit-button {
-  padding: .5rem 0;
+  margin-top: .5rem;
+  padding: .75rem 0;
   font-size: 14px;
 }
 
@@ -9,5 +10,14 @@
 
   &::placeholder {
     font-size: 1rem;
+  }
+}
+
+.modal-body {
+  form {
+    label {
+      font-size: 1rem;
+      margin: 0 0 .1rem .1rem;
+    }
   }
 }

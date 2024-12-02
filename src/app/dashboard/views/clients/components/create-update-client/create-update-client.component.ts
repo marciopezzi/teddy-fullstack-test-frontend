@@ -23,7 +23,9 @@ export class CreateUpdateClientComponent implements OnInit {
     prefix: 'R$ ',
     thousands: '.',
     decimal: ',',
-    align: 'left'
+    align: 'left',
+    allowZero: false,
+    nullable: true
   }
 
   constructor(
@@ -35,8 +37,8 @@ export class CreateUpdateClientComponent implements OnInit {
     const isUpdateAction = this.action === 'update';
     this.clienteForm = this.fb.group({
       name: [isUpdateAction ? this.client.name : '', Validators.required],
-      salary: [isUpdateAction ? this.client.salary : '', [Validators.required]],
-      companyValue: [isUpdateAction ? this.client.companyValue : '', [Validators.required]]
+      salary: [isUpdateAction ? this.client.salary : null, [Validators.required]],
+      companyValue: [isUpdateAction ? this.client.companyValue : null, [Validators.required]]
     });
   }
 

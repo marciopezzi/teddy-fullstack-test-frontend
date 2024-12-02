@@ -5,26 +5,29 @@
 <div class="modal-body">
   <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
 
-    <div class="mb-3">
+    <div class="mb-4">
+      <label for="name" class="form-label">Nome</label>
       <input type="text" id="name" class="form-input" formControlName="name" placeholder="Digite o nome">
     </div>
 
+    <label for="salary" class="form-label">Salário</label>
     <input 
       type="text" 
       id="salary"
-      class="form-input mb-3" 
+      class="form-input mb-4" 
       formControlName="salary" 
-      placeholder="Digite o salário"
       currencyMask [options]="currencyInputOptions"
+      placeholder="Digite o salário"
     >
 
+    <label for="companyValue" class="form-label">Valor da Empresa</label>
     <input 
       type="text" 
       id="companyValue"
-      class="form-input mb-3" 
+      class="form-input mb-4" 
       formControlName="companyValue"
-      placeholder="Digite o valor da empresa"
       currencyMask [options]="currencyInputOptions"
+      placeholder="Digite o valor da empresa"
     >
 
     <button type="submit" class="submit-button" [disabled]="clienteForm.invalid">
