@@ -52,7 +52,7 @@
     @if (onlySelectedClients) {
       <button class="client-manager__create" (click)="resetClientSelection()">Limpar clientes selecionados</button>
     } @else { 
-      <button class="client-manager__create" (click)="createOrUpdateClient('create')">Criar cliente</button>
+      <button data-cy="open-create-modal" class="client-manager__create" (click)="createOrUpdateClient('create')">Criar cliente</button>
     }
     <div class="pagination-container">
       <pagination-controls class="my-pagination" (pageChange)="onPageChange($event)"

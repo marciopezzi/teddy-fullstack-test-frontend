@@ -7,13 +7,21 @@
 
     <div class="mb-4">
       <label for="name" class="form-label">Nome</label>
-      <input type="text" id="name" class="form-input" formControlName="name" placeholder="Digite o nome">
+      <input 
+        type="text" 
+        id="name" 
+        data-cy="client-name"
+        class="form-input" 
+        formControlName="name" 
+        placeholder="Digite o nome"
+      >
     </div>
 
     <label for="salary" class="form-label">Salário</label>
     <input 
       type="text" 
       id="salary"
+      data-cy="client-salary"
       class="form-input mb-4" 
       formControlName="salary" 
       currencyMask [options]="currencyInputOptions"
@@ -24,13 +32,18 @@
     <input 
       type="text" 
       id="companyValue"
+      data-cy="client-company-value"
       class="form-input mb-4" 
       formControlName="companyValue"
       currencyMask [options]="currencyInputOptions"
       placeholder="Digite o valor da empresa"
     >
 
-    <button type="submit" class="submit-button" [disabled]="clienteForm.invalid">
+    <button 
+      type="submit" 
+      class="submit-button" 
+      [disabled]="clienteForm.invalid"
+    >
       {{ action === 'update' ? 'Editar' : 'Criar' }} cliente
     </button>
   </form>
